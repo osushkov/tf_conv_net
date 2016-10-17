@@ -29,7 +29,7 @@ def readImages(path):
                 pixelBuf = f.read(1)
                 result[e, i] = struct.unpack("B", pixelBuf)[0] / 255.0
 
-        print(numEntries)
+        return result
 
 
 def readLabels(path):
@@ -51,5 +51,4 @@ def readLabels(path):
 
             result[e][digit] = 1.0
 
-        print(result)
-        print(numEntries)
+        return result
