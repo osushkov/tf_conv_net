@@ -17,10 +17,17 @@ output = tf.matmul(input, W) + b
 crossEntropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(output, target))
 trainStep = tf.train.GradientDescentOptimizer(0.5).minimize(crossEntropy)
 
+prediction = tf.equal(tf.argmax(target, 1), tf.argmax(output, 1))
+accuracy = tf.reduce_mean(tf.cast(prediction, tf.float32))
+
 sess.run(tf.initialize_all_variables())
 
 for i in range(1000):
     _, loss_value = sess.run([trainStep, crossEntropy], feed_dict={input:images, target:labels})
     print("loss: %f" % loss_value)
+
+trainAccuracy = sess.run(accuracy, feed_dict={input:images, target:labels})
+print("train accuracy: %f" % trainAccuracy)
+
 
 sess.close()
